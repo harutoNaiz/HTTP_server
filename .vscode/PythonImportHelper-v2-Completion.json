@@ -1,0 +1,173 @@
+[
+    {
+        "label": "socket",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "socket",
+        "description": "socket",
+        "detail": "socket",
+        "documentation": {}
+    },
+    {
+        "label": "ssl",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "ssl",
+        "description": "ssl",
+        "detail": "ssl",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "logging",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "logging",
+        "description": "logging",
+        "detail": "logging",
+        "documentation": {}
+    },
+    {
+        "label": "send_request",
+        "kind": 2,
+        "importPath": "client",
+        "description": "client",
+        "peekOfCode": "def send_request(request):\n    # Create a socket object\n    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n    try:\n        # Create SSL context\n        context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)\n        # Load client certificate and private key\n        context.load_cert_chain(certfile=CLIENT_CERT_FILE, keyfile=CLIENT_KEY_FILE)\n        # Connect to the server\n        ssl_socket = context.wrap_socket(client_socket, server_hostname=SERVER_HOST)",
+        "detail": "client",
+        "documentation": {}
+    },
+    {
+        "label": "SERVER_HOST",
+        "kind": 5,
+        "importPath": "client",
+        "description": "client",
+        "peekOfCode": "SERVER_HOST = '192.168.0.105'  # Server's IP address or hostname\nSERVER_PORT = 8080\n# Paths to client certificate and private key\nCLIENT_CERT_FILE = 'client.crt'\nCLIENT_KEY_FILE = 'client.key'\ndef send_request(request):\n    # Create a socket object\n    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n    try:\n        # Create SSL context",
+        "detail": "client",
+        "documentation": {}
+    },
+    {
+        "label": "SERVER_PORT",
+        "kind": 5,
+        "importPath": "client",
+        "description": "client",
+        "peekOfCode": "SERVER_PORT = 8080\n# Paths to client certificate and private key\nCLIENT_CERT_FILE = 'client.crt'\nCLIENT_KEY_FILE = 'client.key'\ndef send_request(request):\n    # Create a socket object\n    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n    try:\n        # Create SSL context\n        context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)",
+        "detail": "client",
+        "documentation": {}
+    },
+    {
+        "label": "CLIENT_CERT_FILE",
+        "kind": 5,
+        "importPath": "client",
+        "description": "client",
+        "peekOfCode": "CLIENT_CERT_FILE = 'client.crt'\nCLIENT_KEY_FILE = 'client.key'\ndef send_request(request):\n    # Create a socket object\n    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n    try:\n        # Create SSL context\n        context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)\n        # Load client certificate and private key\n        context.load_cert_chain(certfile=CLIENT_CERT_FILE, keyfile=CLIENT_KEY_FILE)",
+        "detail": "client",
+        "documentation": {}
+    },
+    {
+        "label": "CLIENT_KEY_FILE",
+        "kind": 5,
+        "importPath": "client",
+        "description": "client",
+        "peekOfCode": "CLIENT_KEY_FILE = 'client.key'\ndef send_request(request):\n    # Create a socket object\n    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n    try:\n        # Create SSL context\n        context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)\n        # Load client certificate and private key\n        context.load_cert_chain(certfile=CLIENT_CERT_FILE, keyfile=CLIENT_KEY_FILE)\n        # Connect to the server",
+        "detail": "client",
+        "documentation": {}
+    },
+    {
+        "label": "handle_request",
+        "kind": 2,
+        "importPath": "server",
+        "description": "server",
+        "peekOfCode": "def handle_request(request_data):\n    lines = request_data.split(\"\\r\\n\")\n    if len(lines) > 0:\n        request_line = lines[0]\n        parts = request_line.split(\" \")\n        if len(parts) == 3:\n            method, path, _ = parts\n            if method in [\"GET\", \"POST\"]:\n                return method, path\n    return None, None",
+        "detail": "server",
+        "documentation": {}
+    },
+    {
+        "label": "generate_response",
+        "kind": 2,
+        "importPath": "server",
+        "description": "server",
+        "peekOfCode": "def generate_response(method, request_path):\n    if method == \"GET\":\n        return generate_get_response(request_path)\n    elif method == \"POST\":\n        return generate_post_response(request_path)\ndef generate_get_response(request_path):\n    file_path = os.path.join(WEB_ROOT, request_path.lstrip(\"/\"))\n    if os.path.exists(file_path) and os.path.isfile(file_path):\n        with open(file_path, \"rb\") as file:\n            content = file.read()",
+        "detail": "server",
+        "documentation": {}
+    },
+    {
+        "label": "generate_get_response",
+        "kind": 2,
+        "importPath": "server",
+        "description": "server",
+        "peekOfCode": "def generate_get_response(request_path):\n    file_path = os.path.join(WEB_ROOT, request_path.lstrip(\"/\"))\n    if os.path.exists(file_path) and os.path.isfile(file_path):\n        with open(file_path, \"rb\") as file:\n            content = file.read()\n            response = f\"HTTP/1.1 200 OK\\r\\nContent-Length: {len(content)}\\r\\n\\r\\n\".encode() + content\n            return response\n    else:\n        return b\"HTTP/1.1 404 Not Found\\r\\n\\r\\n404 Not Found\"\ndef generate_post_response(request_path):",
+        "detail": "server",
+        "documentation": {}
+    },
+    {
+        "label": "generate_post_response",
+        "kind": 2,
+        "importPath": "server",
+        "description": "server",
+        "peekOfCode": "def generate_post_response(request_path):\n    return f\"HTTP/1.1 200 OK\\r\\nContent-Type: text/plain\\r\\n\\r\\n{request_path}\".encode()\ncontext = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)\ncontext.load_cert_chain(certfile=CERT_FILE, keyfile=KEY_FILE)\nwhile True:\n    client_socket, client_address = server_socket.accept()\n    logging.info(f\"Connection from {client_address}\")\n    print(f\"Connection from {client_address}\")\n    ssl_socket = context.wrap_socket(client_socket, server_side=True)\n    request_data = client_socket.recv(1024).decode('utf-8')",
+        "detail": "server",
+        "documentation": {}
+    },
+    {
+        "label": "PORT",
+        "kind": 5,
+        "importPath": "server",
+        "description": "server",
+        "peekOfCode": "PORT = 8080\nWEB_ROOT = 'www' \nCERT_FILE = 'server.crt'\nKEY_FILE = 'server.key'\nserver_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\nserver_socket.bind((HOST, PORT))\nlogging.info(f\"Server listening on {HOST}:{PORT}...\")\nserver_socket.listen()\nprint(f\"Server listening on {HOST}:{PORT}...\")\ndef handle_request(request_data):",
+        "detail": "server",
+        "documentation": {}
+    },
+    {
+        "label": "WEB_ROOT",
+        "kind": 5,
+        "importPath": "server",
+        "description": "server",
+        "peekOfCode": "WEB_ROOT = 'www' \nCERT_FILE = 'server.crt'\nKEY_FILE = 'server.key'\nserver_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\nserver_socket.bind((HOST, PORT))\nlogging.info(f\"Server listening on {HOST}:{PORT}...\")\nserver_socket.listen()\nprint(f\"Server listening on {HOST}:{PORT}...\")\ndef handle_request(request_data):\n    lines = request_data.split(\"\\r\\n\")",
+        "detail": "server",
+        "documentation": {}
+    },
+    {
+        "label": "CERT_FILE",
+        "kind": 5,
+        "importPath": "server",
+        "description": "server",
+        "peekOfCode": "CERT_FILE = 'server.crt'\nKEY_FILE = 'server.key'\nserver_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\nserver_socket.bind((HOST, PORT))\nlogging.info(f\"Server listening on {HOST}:{PORT}...\")\nserver_socket.listen()\nprint(f\"Server listening on {HOST}:{PORT}...\")\ndef handle_request(request_data):\n    lines = request_data.split(\"\\r\\n\")\n    if len(lines) > 0:",
+        "detail": "server",
+        "documentation": {}
+    },
+    {
+        "label": "KEY_FILE",
+        "kind": 5,
+        "importPath": "server",
+        "description": "server",
+        "peekOfCode": "KEY_FILE = 'server.key'\nserver_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\nserver_socket.bind((HOST, PORT))\nlogging.info(f\"Server listening on {HOST}:{PORT}...\")\nserver_socket.listen()\nprint(f\"Server listening on {HOST}:{PORT}...\")\ndef handle_request(request_data):\n    lines = request_data.split(\"\\r\\n\")\n    if len(lines) > 0:\n        request_line = lines[0]",
+        "detail": "server",
+        "documentation": {}
+    },
+    {
+        "label": "server_socket",
+        "kind": 5,
+        "importPath": "server",
+        "description": "server",
+        "peekOfCode": "server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\nserver_socket.bind((HOST, PORT))\nlogging.info(f\"Server listening on {HOST}:{PORT}...\")\nserver_socket.listen()\nprint(f\"Server listening on {HOST}:{PORT}...\")\ndef handle_request(request_data):\n    lines = request_data.split(\"\\r\\n\")\n    if len(lines) > 0:\n        request_line = lines[0]\n        parts = request_line.split(\" \")",
+        "detail": "server",
+        "documentation": {}
+    },
+    {
+        "label": "context",
+        "kind": 5,
+        "importPath": "server",
+        "description": "server",
+        "peekOfCode": "context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)\ncontext.load_cert_chain(certfile=CERT_FILE, keyfile=KEY_FILE)\nwhile True:\n    client_socket, client_address = server_socket.accept()\n    logging.info(f\"Connection from {client_address}\")\n    print(f\"Connection from {client_address}\")\n    ssl_socket = context.wrap_socket(client_socket, server_side=True)\n    request_data = client_socket.recv(1024).decode('utf-8')\n    logging.info(f\"Request: {request_data}\")\n    print(\"Request:\", request_data)",
+        "detail": "server",
+        "documentation": {}
+    }
+]
